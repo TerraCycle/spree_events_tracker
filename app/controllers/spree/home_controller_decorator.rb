@@ -1,4 +1,8 @@
-Spree::HomeController.class_eval do
-  include Spree::PageTracker
-  track_actions [:index]
+module Spree::HomeControllerDecorator
+  def self.prepended(base)
+    base.include Spree::PageTracker
+    base.track_actions [:index]
+  end
 end
+
+::Spree::HomeController.prepend(Spree::HomeControllerDecorator)
