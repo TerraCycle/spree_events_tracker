@@ -1,5 +1,5 @@
 module Spree
-  module CartUpdateWithTracker
+  module CartUpdateWithTrackerDecorator
 
     def call(order:, params:)
       return failure(order) unless order.update(filter_order_items(order, params))
@@ -27,4 +27,4 @@ module Spree
   end
 end
 
-Spree::Cart::Update.send(:prepend, Spree::CartUpdateWithTracker)
+Spree::Cart::Update.send(:prepend, Spree::CartUpdateWithTrackerDecorator)
