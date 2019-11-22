@@ -1,5 +1,5 @@
 module Spree
-  module CartAddItemWithTracker
+  module CartAddItemWithTrackerDecorator
     def add_to_line_item(order:, variant:, quantity: nil, options: {})
       options ||= {}
       quantity ||= 1
@@ -35,4 +35,4 @@ module Spree
   end
 end
 
-Spree::Cart::AddItem.send(:prepend, Spree::CartAddItemWithTracker)
+Spree::Cart::AddItem.send(:prepend, Spree::CartAddItemWithTrackerDecorator)

@@ -1,5 +1,5 @@
 module Spree
-  module RemoveItemWithTracker
+  module CartRemoveItemWithTrackerDecorator
     def remove_from_line_item(variant, quantity, options = {})
       line_item = Spree::Dependencies.line_item_by_variant_finder.constantize.new.execute(order: order, variant: variant, options: options)
 
@@ -22,4 +22,4 @@ module Spree
   end
 end
 
-Spree::Cart::RemoveItem.send(:prepend, Spree::RemoveItemWithTracker)
+Spree::Cart::RemoveItem.send(:prepend, Spree::CartRemoveItemWithTrackerDecorator)
