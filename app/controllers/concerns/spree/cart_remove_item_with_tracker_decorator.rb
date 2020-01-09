@@ -1,6 +1,6 @@
 module Spree
   module CartRemoveItemWithTrackerDecorator
-    def remove_from_line_item(variant, quantity, options = {})
+    def remove_from_line_item(order:, variant:, quantity:, options:)
       line_item = Spree::Dependencies.line_item_by_variant_finder.constantize.new.execute(order: order, variant: variant, options: options)
 
       raise ActiveRecord::RecordNotFound if line_item.nil?
@@ -16,6 +16,10 @@ module Spree
       else
         line_item.save!
       end
+
+      Spree::Cart::Event::Tracker.new(
+        actor: order, target: line_item, total: order.total, variant_id: line_item.variant_id
+      ).track
 
       line_item
     end
